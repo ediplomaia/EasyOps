@@ -7,9 +7,9 @@ pipeline {
                 git url:'https://github.com/ediplomaia/EasyOps.git', branch:'dev'
             }
         }
-    }
+    
 
-    stages {
+    
         stage('Buil Imagem') {
             steps {
                 script{
@@ -18,9 +18,8 @@ pipeline {
                 }
             }
         }
-    }
-
-    stages {
+    
+    
         stage('Push Imagem') {
             steps {
                 script{
@@ -33,4 +32,5 @@ pipeline {
             }
         }
     }
+
 }
