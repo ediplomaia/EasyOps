@@ -2,9 +2,34 @@ pipeline {
     agent any
 
     stages {
-        stage('Teste') {
+        stage('Verificar conexão Git') {
             steps {
-                echo 'Teste'
+                git url:'https://github.com/ediplomaia/EasyOps.git', branch:'dev'
+            }
+        }
+    }
+
+    stages {
+        stage('Buil Imagem') {
+            steps {
+                script{
+                    dockerapp = docker.build("ediplo/easyops:${env.BUILD_ID}",
+                      '-f ./Dockerfile .')
+                }
+            }
+        }
+    }
+
+    stages {
+        stage('Push Imagem') {
+            steps {
+                script{
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                    dockerapp.push('latest')
+                    dockerapp.push("${env.BUILD_ID}")
+
+                    }
+                }
             }
         }
     }

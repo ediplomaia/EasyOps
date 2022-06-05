@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-easyops
+  labels:
+    app: easyops
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: easyops
+  template:
+    metadata:
+      labels:
+        app: neasyops
+    spec:
+      containers:
+      - name: easyops
+        image: ediplo/easyops:{{tag}}
+        ports:
+        - containerPort: 80
